@@ -1,0 +1,14 @@
+<% include ../includes/header.ejs %>
+
+<h1>Tigers (<%= count %>)</h1>
+<ol class="list-unstyled">
+    <% tigers.forEach(function(tiger, i) { %>
+        <li><%= tiger %></li>
+    <% }); %>
+</ol>
+
+<a href="/add">Add tiger</a><br/>
+<a href="/update">Update tiger</a><br/>
+<a href="/del">Delete tiger</a><br/>
+
+<% include ../includes/footer.ejs %>

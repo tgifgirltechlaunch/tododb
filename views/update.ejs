@@ -1,0 +1,32 @@
+<% include ../includes/header.ejs %>
+
+<h1>Update a tiger</h1>
+<form action="update-submit" method="get">
+    <input type="number" name="pos" required/>
+    <input type="text" name="name" required/>
+    <input type="submit" value="Update Tiger"/>
+</form>
+
+<ul id="tigers-list"></ul>
+
+<a href="#" onclick="seeTigers();">See Tigers</a><br/>
+<a href="/">Back</a><br/>
+
+<script>
+    function seeTigers(){
+        $.ajax({
+            url: '/get-tigers',
+            data: false,
+            success: callback,
+            dataType: 'json'
+        });
+    }
+
+    function callback(data) {
+        data.tigers.forEach(function(tiger, i){
+            $('#tigers-list').append('<li>'+i+': '+tiger+'</li>');
+        });
+    }
+</script>
+
+<% include ../includes/footer.ejs %>

@@ -1,0 +1,17 @@
+<% include ../includes/header.ejs %>
+
+<h1>Please login</h1>
+
+<p>Insert username and password</p>
+
+<% if(error) { %>
+    <div class="alert alert-danger">Your username or password were wrong</div>
+<% } %>
+
+<form action="login-submit" method="get">
+    <input type="text" name="user" required/>
+    <input type="password" name="pass" required/>
+    <input type="submit" value="Login"/>
+</form>
+
+<% include ../includes/footer.ejs %>
