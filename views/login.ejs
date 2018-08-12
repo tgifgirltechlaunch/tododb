@@ -1,17 +1,23 @@
 <% include ../includes/header.ejs %>
 
-<h1>Please login</h1>
+<div class="container">
+    <% if(error) { %>
+        <div class="alert alert-danger">Your username or password were wrong</div>
+    <% } %>
 
-<p>Insert username and password</p>
+    <div class="form-signin signinform">
+        <form class="form-signin" action="login-submit" method="get">
+        <h2 class="form-signin-heading">Please Log in</h2>
+        <label for="username" class="sr-only">Username</label>
+        <input name="user" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Login  &#xf1d8;"/>
+        </form>
 
-<% if(error) { %>
-    <div class="alert alert-danger">Your username or password were wrong</div>
-<% } %>
+        <p><a href="/signup">Sign-Up</a></p>
 
-<form action="login-submit" method="get">
-    <input type="text" name="user" required/>
-    <input type="password" name="pass" required/>
-    <input type="submit" value="Login"/>
-</form>
+    </div>
+</div> <!-- /container -->
 
 <% include ../includes/footer.ejs %>

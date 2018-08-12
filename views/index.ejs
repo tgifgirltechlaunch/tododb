@@ -1,14 +1,89 @@
 <% include ../includes/header.ejs %>
+<div id="top">
+    <div id="count">Total <%= count %></div>
+</div>
 
-<h1>Tigers (<%= count %>)</h1>
-<ol class="list-unstyled">
-    <% tigers.forEach(function(tiger, i) { %>
-        <li><%= tiger %></li>
-    <% }); %>
-</ol>
+<div class="content">
+    
+    
+    <div id="wrapper">
+        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Menu</span>
+        </button>
+        <!-- Sidebar -->
+        <div id="sidebar">
 
-<a href="/add">Add tiger</a><br/>
-<a href="/update">Update tiger</a><br/>
-<a href="/del">Delete tiger</a><br/>
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
 
+            <ul class="list-unstyled components">
+                <li>
+                    <a class="current" href="#">Home</a>
+                </li>
+                <li>
+                    <a href="/add">Add</a>
+                </li>
+                <li>
+                    <a href="/del">Delete</a>
+                </li>
+                <li>
+                    <a href="/update">Edit</a>
+                </li>
+                <li>
+                    <a href="#">Sort</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Select</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Date</a>
+                        </li>
+                        <li>
+                            <a href="#">Priority</a>
+                        </li>
+                        <li>
+                            <a href="#">Pending</a>
+                        </li>
+                        <li>
+                            <a href="#">Completed</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="middle">
+        
+        
+        <section class="cards">
+            <% todos.forEach(function(todo, i) { console.log(">>>>>>" + todo.completed); %>    
+                <article class="card">
+                <picture class="thumbnail">
+                        <img class="category__01" src="https://abbeyjfitzgerald.com/wp-content/uploads/2018/01/cloud.svg" alt="" />
+                </picture>
+                <div class="card-content">
+                    <p class="category category__01"><%= todo.category %></p>
+                    <h2><%= todo.todo %></h2>
+                    <p>
+                       <%= todo.notes %>
+                    </p>
+                </div><!-- .card-content -->
+                <footer>
+                    <div class="post-meta">
+                        <span class="timestamp"><i class="fa fa-clock-o"></i> Created: <%= todo.created %></span>
+                        
+                        <span class="round">
+                            <input name="todoid" type="hidden" id="todoid" value="<%= todo.id %>"  />
+                            <input name="completed" type="checkbox" id="completed" value="<%= todo.completed %>"  />
+                            <label for="completed"></label>
+                        </span>
+                    </div>
+                </footer>
+                </article>
+            <% }); %>
+        </section>
+                
+    </div>
+</div>
 <% include ../includes/footer.ejs %>

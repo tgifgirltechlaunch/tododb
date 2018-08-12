@@ -1,5 +1,5 @@
 {
-  "name": "hidden-tigers",
+  "name": "tigertodo",
   "version": "1.0.0",
   "dependencies": {
     "cookie-parser": "^1.4.3",
@@ -7,21 +7,22 @@
     "ejs": "2.6.1",
     "express": "~4.16.3",
     "express-session": "^1.15.6",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.3"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "description": "",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/salvipascual/tigers.git"
+    "url": "git+https://github.com/tgifgirltechlaunch/tododb.git"
   },
-  "author": "",
+  "author": "Lazara Michelle",
   "license": "ISC",
+  "homepage": "https://github.com/tgifgirltechlaunch/tododb#readme",
   "bugs": {
-    "url": "https://github.com/salvipascual/tigers/issues"
-  },
-  "homepage": "https://github.com/salvipascual/tigers#readme"
+    "url": "https://github.com/tgifgirltechlaunch/tododb/issues"
+  }
 }

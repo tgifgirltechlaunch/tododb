@@ -1,21 +1,21 @@
 <% include ../includes/header.ejs %>
 
-<h1>Update a tiger</h1>
+<h1>Update a todo</h1>
 <form action="update-submit" method="get">
     <input type="number" name="pos" required/>
     <input type="text" name="name" required/>
-    <input type="submit" value="Update Tiger"/>
+    <input type="submit" value="Update Todo"/>
 </form>
 
-<ul id="tigers-list"></ul>
+<ul id="todo-list"></ul>
 
-<a href="#" onclick="seeTigers();">See Tigers</a><br/>
+<a href="#" onclick="seeTodos();">See Todos</a><br/>
 <a href="/">Back</a><br/>
 
 <script>
-    function seeTigers(){
+    function seeTodos(){
         $.ajax({
-            url: '/get-tigers',
+            url: '/get-todos',
             data: false,
             success: callback,
             dataType: 'json'
@@ -23,8 +23,8 @@
     }
 
     function callback(data) {
-        data.tigers.forEach(function(tiger, i){
-            $('#tigers-list').append('<li>'+i+': '+tiger+'</li>');
+        data.todos.forEach(function(todo, i){
+            $('#todo-list').append('<li>'+i+': '+todo+'</li>');
         });
     }
 </script>

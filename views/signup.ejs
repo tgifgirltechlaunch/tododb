@@ -1,0 +1,27 @@
+<% include ../includes/header.ejs %>
+
+<div class="container">
+    <% if(error) { %>
+        <div class="alert alert-danger">We're sorry, but there is already a user with that username and password combination.
+            <p>Please try logging in instead.</p>
+        </div>
+    <% } %>
+
+    <div class="form-signup signupform">
+        <form class="form-signup" action="signup-submit" method="get">
+            <h2 class="form-signup-heading">Please Sign Up</h2>
+            <label for="username" class="sr-only">Username</label>
+            <input name="user" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <label for="name" class="sr-only">Name</label>
+            <input name="name" type="text" id="inputName" class="form-control" placeholder="Name" required>
+            <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Sign Up  &#xf1d8;"/>
+        </form>
+
+        <p><a href="/login">Already have an account?</a></p>
+
+    </div>
+</div> <!-- /container -->
+
+<% include ../includes/footer.ejs %>
