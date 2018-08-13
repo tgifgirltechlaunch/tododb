@@ -55,6 +55,20 @@ a.current{
     text-align: right;
     padding: 20px 30px;
 }
+.breadcrumbs{
+    background-color: #138496;
+}
+a.back{
+    text-decoration: none;
+    color: #ffffff;
+    padding-left: 20px;
+}
+
+a.back:hover{
+    text-decoration: none;
+    color: black;
+}
+
 /*   sidebar  */
 #wrapper {
     flex: 1 1 200px
@@ -259,3 +273,39 @@ img {
   .round input[type="checkbox"]:checked + label:after {
     opacity: 1;
   }
+
+  /* delete page */
+  #delwrap{
+      list-style: none;
+  }
+  ul#dellist {
+    width: 100%;
+	list-style: none;
+    padding: 5px;
+    display: table;
+    table-layout: fixed; /* the magic dust that ensures equal width */
+  }
+  ul#dellist li {
+    display: inline;
+    display: table-cell;
+    text-align: center;
+    margin-left: -50px;
+  }
+  .delrow:nth-child(even) {
+    background-color: #eef1f1;
+  }
+  .delrow:nth-child(odd) {
+    background-color: #cccccc;
+  }
+  .delcol{
+    padding: 10px;
+  }
+  .listcount{
+      border: 1px solid #138496;
+      background-color: #17a2b8;
+      color: #fff;
+      padding: 5px;
+      max-width: 25px;
+      min-width: 25px;
+  }
+    

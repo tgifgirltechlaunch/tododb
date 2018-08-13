@@ -55,12 +55,10 @@ module.exports = function(app, todos, fs, database, crypto)
                 // save todo to the array
                 todos.push(req.query.todo);
             
-                // redirect to home
+                // redirect to get todos for updated todos
                 res.redirect('/get-todos');
             }
         });
-
-        
     });
 
     // 
@@ -92,7 +90,8 @@ module.exports = function(app, todos, fs, database, crypto)
             }
             else
             {
-                res.redirect('/');
+                // redirect to get todos for updated todos
+                res.redirect('/get-todos');
             }
         });
     });
@@ -104,40 +103,42 @@ module.exports = function(app, todos, fs, database, crypto)
         let completed = req.body.checkval;
         
         if(req.session.username) {
-            console.log(">>> id " + id + " completed " + completed);
+            // console.log(">>> id " + id + " completed " + completed);
             database.query("UPDATE `todos` SET `completed` ='"+completed+"' WHERE `id` ='"+id+"'",
             function (error, results, fields){
                 if(error){ throw error;}
-                else{
-                    // console.log('check results: ', results);
-                    // todos[id].completed = completed;
-                    // res.redirect('/');
-                }
             });
         }
         else res.redirect('/login');
     });
-
 
     //
     // delete a todo
     //
     app.get('/del', function(req, res){
         if(req.session.username) {
-            res.render('delete', {ptitle:"Delete todo", username: req.session.username});
+            res.render('delete', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, userid: req.session.userid});
         }
         else res.redirect('/login');
     });
 
-    app.get('/del-submit', function(req, res){
+    app.get('/del-submit/:id', function(req, res){
         // delete from array
-        todos.splice(req.query.pos, 1);
+        let id = req.params.id;
+
+        // console.log("delete todo " + id);
 
         // delete todo from the database
-        database.query("DELETE FROM todos WHERE id='"+req.query.pos+"'");
+        database.query(
+            `DELETE FROM todos WHERE id = ${id}`,
+            function (error, results, fields){
+                if(error) {console.log('delete error: ', error);}
+                else{
+                    // redirect to get todos for updated todos
+                    res.redirect('/get-todos');
+                }
+        });
 
-        // redirect to home
-        res.redirect('/');
     });
 
     //
@@ -176,7 +177,6 @@ module.exports = function(app, todos, fs, database, crypto)
         var sql = "SELECT * FROM users WHERE username='"+req.query.user+"' AND password='"+passhash+"'";
         
         database.query(sql, function(err, rows){
-            console.log("sql " + rows);
             // if error, close database connection and console log error
             if(err) {
                 // database.end();
@@ -220,17 +220,21 @@ module.exports = function(app, todos, fs, database, crypto)
     // ajax calls
     //
     app.get('/get-todos', function(req, res){
-        
-        // res.json({todos: todos});
-        database.query(
-        `SELECT * FROM todos`,
-        function (error, results, fields){
-            if(error) throw console.log('get-todos error: ', error);
+        uid = req.session.userid;
+        todos = [];
+        // console.log("get todos userid " + uid);
+        database.query(`SELECT * FROM todos WHERE userid = ${uid}`, function(error, rows){
+            if(error){console.log('get-todos error: ', error);}
             else{
+                // load todos from the database
+                rows.forEach(function(data){
+                    todos[data.id] = data;
+                })
+
+                // redirect to home
                 res.redirect('/');
             }
-        });
+        }); 
     });
-
     
 }

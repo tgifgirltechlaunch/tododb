@@ -1,11 +1,56 @@
 <% include ../includes/header.ejs %>
+<div class="breadcrumbs"><a class="back" href="/"><i class="fas fa-caret-square-left"></i> Back</a></div>
+<div class="content">
+    
+    <div id="wrapper">
+        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Menu</span>
+        </button>
+        <!-- Sidebar -->
+        <div id="sidebar">
 
-<h1>Delete a Todo</h1>
-<form action="del-submit" method="get">
-    <input type="number" name="pos" required/>
-    <input type="submit" value="Delete Todo"/>
-</form>
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
 
-<a href="/">Back</a><br/>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a class="current" href="#">Add</a>
+                </li>
+                <li>
+                    <a href="/del">Delete</a>
+                </li>
+                <li>
+                    <a href="/update">Edit</a>
+                </li>
+            </ul>
+        </div>
 
+    </div>
+
+    
+    <div id="middle">
+        <h1>Delete Todo</h1>
+        <div id="delwrap">
+        <% if (typeof todos !== 'undefined' && todos.length > 0) {%>
+            <% todos.forEach(function(todo, i) { %> 
+                <div class="delrow">
+                    <div class="listcount"><%= i %></div>
+                    <ul id="dellist">
+                        <li class="delcol"><%= todo.todo %> </li>
+                        <li class="delcol"><%= todo.category %></li>
+                        <li class="delcol"><%= todo.priority %></li>
+                        <li class="delcol"><%= todo.notes %></li>
+                        <li class="delcol"><%= moment(todo.created).format('MM/DD/YYYY');%></li>
+                        <li class="delcol"><a href="/del-submit/<%= todo.id %>" class="btn btn-primary">Delete</a> </li>
+                    </ul>
+                </div>
+        <% })} %>
+        </div>
+    </div>
+</div>
 <% include ../includes/footer.ejs %>
