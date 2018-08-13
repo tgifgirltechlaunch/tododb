@@ -103,7 +103,7 @@ module.exports = function(app, todos, fs, database, crypto)
         let completed = req.body.checkval;
         
         if(req.session.username) {
-            // console.log(">>> id " + id + " completed " + completed);
+            console.log(">>> id " + id + " completed " + completed);
             database.query("UPDATE `todos` SET `completed` ='"+completed+"' WHERE `id` ='"+id+"'",
             function (error, results, fields){
                 if(error){ throw error;}
@@ -111,6 +111,7 @@ module.exports = function(app, todos, fs, database, crypto)
         }
         else res.redirect('/login');
     });
+
 
     //
     // delete a todo
