@@ -1,4 +1,6 @@
 <% include ../includes/header.ejs %>
+<% include functions.ejs %>
+
 <div id="top">
     <div id="count">Total <%= count %></div>
 </div>
@@ -31,24 +33,6 @@
                 <li>
                     <a href="/update">Edit</a>
                 </li>
-                <li>
-                    <a href="#">Sort</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Select</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Date</a>
-                        </li>
-                        <li>
-                            <a href="#">Priority</a>
-                        </li>
-                        <li>
-                            <a href="#">Pending</a>
-                        </li>
-                        <li>
-                            <a href="#">Completed</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
@@ -57,10 +41,12 @@
         
         
         <section class="cards">
-            <% todos.forEach(function(todo, i) { console.log(">>>>>>" + todo.completed); %>    
+
+
+            <% todos.forEach(function(todo, i) { %>    
                 <article class="card">
                 <picture class="thumbnail">
-                        <img class="category__01" src="https://abbeyjfitzgerald.com/wp-content/uploads/2018/01/cloud.svg" alt="" />
+                        <img id="catimg<%= i %>" class="category__01"  alt="Category Image" src="<%= getCatImg(todo.category) %>" />
                 </picture>
                 <div class="card-content">
                     <p class="category category__01"><%= todo.category %></p>
@@ -71,19 +57,25 @@
                 </div><!-- .card-content -->
                 <footer>
                     <div class="post-meta">
-                        <span class="timestamp"><i class="fa fa-clock-o"></i> Created: <%= todo.created %></span>
+                        <span class="timestamp"><i class="fa fa-clock-o"></i> Created: <%= moment(todo.created).format('MM/DD/YYYY');%></span>
                         
                         <span class="round">
-                            <input name="todoid" type="hidden" id="todoid" value="<%= todo.id %>"  />
-                            <input name="completed" type="checkbox" id="completed" value="<%= todo.completed %>"  />
-                            <label for="completed"></label>
+                            <input name="todoid<%= todo.id %>" type="hidden" id="todoid<%= todo.id %>" value="<%= todo.id %>"  />
+                            <input  onclick="chkit('<%= todo.id %>')" name="completed<%= todo.id %>" type="checkbox" id="completed<%= todo.id %>" value="<%= todo.completed %>" <% if(todo.completed === 1) { %> checked <% } else { %> <% } %>  />
+                            
+                            <label for="completed<%= todo.id %>"></label>
+
+                            <!-- <input onclick="chkit('<%= todo.id %>')" type="checkbox" name="completed<%= todo.id %>" id="completed<%= todo.id %>" value="<%= todo.completed %>" <% if(todo.completed === 1) { %> checked <% } else { %> <% } %>  /> -->
                         </span>
                     </div>
+                    
                 </footer>
                 </article>
             <% }); %>
+            
         </section>
-                
+        
     </div>
 </div>
+
 <% include ../includes/footer.ejs %>

@@ -1,32 +1,70 @@
 <% include ../includes/header.ejs %>
+<div><a href="/"><i class="fas fa-caret-square-left"></i> Back</a></div>
+<div class="content">
+    
+    <div id="wrapper">
+        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Menu</span>
+        </button>
+        <!-- Sidebar -->
+        <div id="sidebar">
 
-<h1>Update a todo</h1>
-<form action="update-submit" method="get">
-    <input type="number" name="pos" required/>
-    <input type="text" name="name" required/>
-    <input type="submit" value="Update Todo"/>
-</form>
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
 
-<ul id="todo-list"></ul>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a class="current" href="#">Add</a>
+                </li>
+                <li>
+                    <a href="/del">Delete</a>
+                </li>
+                <li>
+                    <a href="/update">Edit</a>
+                </li>
+            </ul>
+        </div>
 
-<a href="#" onclick="seeTodos();">See Todos</a><br/>
-<a href="/">Back</a><br/>
+    </div>
 
-<script>
-    function seeTodos(){
-        $.ajax({
-            url: '/get-todos',
-            data: false,
-            success: callback,
-            dataType: 'json'
-        });
-    }
+    
+    <div id="middle">
+        <h1>Edit todo</h1>
+        <% if (typeof todos !== 'undefined' && todos.length > 0) {%>
+            <% todos.forEach(function(todo, i) { %> 
 
-    function callback(data) {
-        data.todos.forEach(function(todo, i){
-            $('#todo-list').append('<li>'+i+': '+todo+'</li>');
-        });
-    }
-</script>
+        <form action="update-submit" method="get">
 
+            <div class="form-group">
+                <input type="hidden" name="userid" value="<%= userid %>">
+                <input type="hidden" name="todoid" value="<%= todo.id %>">
+                <label for="todo">To Do</label>
+                <textarea cols="50" rows="2" name="todo" id="todo" class="form-control" required autofocus><%= todo.todo %></textarea>        
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea cols="50" rows="4" name="notes" id="notes" class="form-control" required><%= todo.notes %></textarea>        
+            </div>
+            
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <div><input type="text" name="priority" value="<%= todo.priority %>"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category</label>
+                <div><input type="text" name="category" value="<%= todo.category %>"></div>                
+            </div>
+            
+            <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Change  &#xf1d8;"/>
+        </form>
+        <% })} %>
+    </div>
+</div>
 <% include ../includes/footer.ejs %>

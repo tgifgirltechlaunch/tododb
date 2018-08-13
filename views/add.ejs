@@ -28,24 +28,6 @@
                 <li>
                     <a href="/update">Edit</a>
                 </li>
-                <li>
-                    <a href="#">Sort</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Select</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Date</a>
-                        </li>
-                        <li>
-                            <a href="#">Priority</a>
-                        </li>
-                        <li>
-                            <a href="#">Pending</a>
-                        </li>
-                        <li>
-                            <a href="#">Completed</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
 
@@ -57,6 +39,7 @@
         <form action="add-submit" class="form-add" method="get">
 
             <div class="form-group">
+                <input type="hidden" name="userid" value="<%= userid %>">
                 <label for="todo">To Do</label>
                 <textarea cols="50" rows="2" name="todo" id="todo" class="form-control" placeholder="To Do Text" required autofocus></textarea>        
             </div>
@@ -91,31 +74,31 @@
             <div class="form-group">
                     <label for="category">Category</label>
                     <div class="form-check">
-                            <input class="form-check-input" type="radio" name="category" id="category1" value="Work" checked>
+                            <input class="form-check-input" type="radio" name="category" id="category1" value="work" checked>
                             <label class="form-check-label" for="category1">
                               Work
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio" name="category" id="category2" value="Home">
+                            <input class="form-check-input" type="radio" name="category" id="category2" value="home">
                             <label class="form-check-label" for="category2">
                               Home
                             </label>
                           </div>
                           <div class="form-check disabled">
-                            <input class="form-check-input" type="radio" name="category" id="category3" value="Hobby">
+                            <input class="form-check-input" type="radio" name="category" id="category3" value="hobby">
                             <label class="form-check-label" for="category3">
                               Hobby
                             </label>
                           </div>
                           <div class="form-check disabled">
-                            <input class="form-check-input" type="radio" name="category" id="category3" value="Leisure">
+                            <input class="form-check-input" type="radio" name="category" id="category3" value="leisure">
                             <label class="form-check-label" for="category3">
                               Leisure
                             </label>
                           </div>
                           <div class="form-check disabled">
-                            <input class="form-check-input" type="radio" name="category" id="category3" value="Misc">
+                            <input class="form-check-input" type="radio" name="category" id="category3" value="misc">
                             <label class="form-check-label" for="category3">
                               Misc
                             </label>

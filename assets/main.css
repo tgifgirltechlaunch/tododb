@@ -70,6 +70,7 @@ a.current{
     max-width: 12vw;
     min-width: 12vw;
     padding: 10px;
+    display: none;
 }
 
 /* Main Content */
@@ -83,6 +84,14 @@ a.current{
 }
 
 .btn-primary:hover{
+    background-color: #138496;
+}
+
+.btn-primary:active{
+    background-color: #138496;
+}
+
+.btn-primary:visited{
     background-color: #138496;
 }
 
