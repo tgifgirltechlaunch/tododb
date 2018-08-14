@@ -16,13 +16,13 @@
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a class="current" href="#">Add</a>
+                    <a href="#">Add</a>
                 </li>
                 <li>
                     <a href="/del">Delete</a>
                 </li>
                 <li>
-                    <a href="/update">Edit</a>
+                    <a class="current" href="/update">Edit</a>
                 </li>
             </ul>
         </div>
@@ -51,12 +51,58 @@
             
             <div class="form-group">
                 <label for="priority">Priority</label>
-                <div><input type="text" name="priority" value="<%= todo.priority %>"></div>
+                <div class="form-check">
+                    <input class="form-check-input"  name="priority" type="radio" id="priority1" value="low" <% if(todo.priority === "low") { %> checked <% } else { %> <% } %>  />
+                    <label class="form-check-label" for="priority1">
+                        Low
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input"  name="priority" type="radio" id="priority2" value="medium" <% if(todo.priority === "medium") { %> checked <% } else { %> <% } %>  />
+                    <label class="form-check-label" for="priority2">
+                        Medium
+                    </label>
+                </div>
+                <div class="form-check disabled">
+                    <input class="form-check-input"  name="priority" type="radio" id="priority3" value="high" <% if(todo.priority === "high") { %> checked <% } else { %> <% } %>  />
+                    <label class="form-check-label" for="priority3">
+                        High
+                    </label>
+                </div>
             </div>
             
             <div class="form-group">
                 <label for="category">Category</label>
-                <div><input type="text" name="category" value="<%= todo.category %>"></div>                
+                <div class="form-check">
+                        <input class="form-check-input" name="category" type="radio" id="category1" value="work" <% if(todo.category === "work") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="category1">
+                            Work
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" name="category" type="radio" id="category2" value="home" <% if(todo.category === "home") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="category2">
+                            Home
+                        </label>
+                        </div>
+                        <div class="form-check disabled">
+                        <input class="form-check-input" name="category" type="radio" id="category3" value="hobby" <% if(todo.category === "hobby") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="category3">
+                            Hobby
+                        </label>
+                        </div>
+                        <div class="form-check disabled">
+                        <input class="form-check-input" name="category" type="radio" id="category4" value="leisure" <% if(todo.category === "leisure") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="category4">
+                            Leisure
+                        </label>
+                        </div>
+                        <div class="form-check disabled">
+                        <input class="form-check-input" name="category" type="radio" id="category5" value="misc" <% if(todo.category === "misc") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="category5">
+                            Misc
+                        </label>
+                        </div>
             </div>
             
             <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Change  &#xf1d8;"/>

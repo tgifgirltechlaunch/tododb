@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require('express-session');
+const flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 var fs = require('fs');
@@ -26,8 +27,10 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-app.use("/", express.static(__dirname + "/assets"));
 
+app.use(flash());
+
+app.use("/", express.static(__dirname + "/assets"));
 
 
 // get the todos from the database

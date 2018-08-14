@@ -38,11 +38,12 @@
     </div>
 
     <div id="middle">
-        
-        
+        <div class="feedback">
+            <% if (message.length) { %>
+            <div class="flash"><%= message %></div>
+            <% } %>
+        </div>
         <section class="cards">
-
-
             <% todos.forEach(function(todo, i) { %>    
                 <article class="card">
                 <picture class="thumbnail">

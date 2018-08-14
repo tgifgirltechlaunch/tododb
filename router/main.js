@@ -1,27 +1,29 @@
 const moment = require('moment');
 module.exports = function(app, todos, fs, database, crypto)
 {
-    
     //
     // list the todos
     //
     app.get('/', function(req, res){
-        if(req.session.username) {
-            
+        if(req.session.email) {
+            // console.log(">>>> " + req.session.email + " >>>> " + req.session.userid);
             todos = todos.filter(function( obj ) {
+                // console.log(">>>> " + obj.userid + " >>>> " + req.session.userid);
                 return obj.userid === req.session.userid;
             });
 
-            // console.log("filtered todos \n " + JSON.stringify(todos));
-
             // get the count of non-empty elements  
             var count = todos.filter(function(value) {return value !== undefined}).length;
-            // console.log(">>> " + req.session.userid + " " + req.session.username);
 
+            if(count === 0){
+                req.flash('empty', 'Please add your first to do.');
+            }
+            else{
+                req.flash('empty', '');
+            }
             
-            // console.log("todos \n " + JSON.stringify(todos));
             // render the page
-            res.render('index', {moment: moment, ptitle:"Todos", todos: todos, count:count, username: req.session.username, userid: req.session.userid});
+            res.render('index', {message: req.flash('empty'), moment: moment, ptitle:"Todos", todos: todos, count:count, username: req.session.username, userid: req.session.userid});
         }
         else res.redirect('/login');
     });
@@ -30,8 +32,8 @@ module.exports = function(app, todos, fs, database, crypto)
     // add a new todo
     //
     app.get('/add', function(req, res){
-        if(req.session.username) {
-            res.render('add', {ptitle:"Add todo", username: req.session.username, userid: req.session.userid});
+        if(req.session.email) {
+            res.render('add', {ptitle:"Add todo", username: req.session.username, email: req.session.email, userid: req.session.userid});
         }
         else res.redirect('/login');
     });
@@ -65,8 +67,8 @@ module.exports = function(app, todos, fs, database, crypto)
     // update a todo
     //
     app.get('/update', function(req, res){
-        if(req.session.username) {
-            res.render('update', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, userid: req.session.userid});
+        if(req.session.email) {
+            res.render('update', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
         }
         else res.redirect('/login');
         
@@ -84,7 +86,6 @@ module.exports = function(app, todos, fs, database, crypto)
         var sql = "UPDATE todos SET category ='"+cat+"', priority ='"+priority+"', notes ='"+notes+"', todo ='"+todo+"' WHERE id='"+todoid+"'";
         
         database.query(sql, function(err, rows){
-            console.log("sql " + rows);
             if(err) {
                 return console.log(err);
             }
@@ -102,8 +103,8 @@ module.exports = function(app, todos, fs, database, crypto)
         let id = req.body.tid;
         let completed = req.body.checkval;
         
-        if(req.session.username) {
-            console.log(">>> id " + id + " completed " + completed);
+        if(req.session.email) {
+            // console.log(">>> id " + id + " completed " + completed);
             database.query("UPDATE `todos` SET `completed` ='"+completed+"' WHERE `id` ='"+id+"'",
             function (error, results, fields){
                 if(error){ throw error;}
@@ -117,8 +118,8 @@ module.exports = function(app, todos, fs, database, crypto)
     // delete a todo
     //
     app.get('/del', function(req, res){
-        if(req.session.username) {
-            res.render('delete', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, userid: req.session.userid});
+        if(req.session.email) {
+            res.render('delete', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
         }
         else res.redirect('/login');
     });
@@ -151,14 +152,16 @@ module.exports = function(app, todos, fs, database, crypto)
     app.get('/login-submit', function(req, res){
         // test if user/pass exist in the database
         var passhash = crypto.createHash('md5').update(req.query.pass).digest('hex');
-        var sql = "SELECT * FROM users WHERE username='"+req.query.user+"' AND password='"+passhash+"'";
+        var sql = "SELECT * FROM users WHERE email='"+req.query.email+"' AND password='"+passhash+"'";
         database.query(sql, function(err, rows){
             // if exist, create session and redirect to home
             if(rows.length > 0) {
-                
-                req.session.username = req.query.user;
+                //put values in session
+                //since there should only be one matching record assign username and id to session for reference
+                req.session.email = req.query.email;
+                req.session.username = rows[0].username;
                 req.session.userid = rows[0].id;
-                
+                // console.log("username " + req.session.username);
                 res.redirect('/');
                 
             // if do not exist, redirect to login page
@@ -175,7 +178,7 @@ module.exports = function(app, todos, fs, database, crypto)
     app.get('/signup-submit', function(req, res){
         // test if user/pass exist in the database
         var passhash = crypto.createHash('md5').update(req.query.pass).digest('hex');
-        var sql = "SELECT * FROM users WHERE username='"+req.query.user+"' AND password='"+passhash+"'";
+        var sql = "SELECT * FROM users WHERE email='"+req.query.email+"' AND password='"+passhash+"'";
         
         database.query(sql, function(err, rows){
             // if error, close database connection and console log error
@@ -188,8 +191,8 @@ module.exports = function(app, todos, fs, database, crypto)
             // if record does not exist, insert new user in database
             if (!rows.length)
             {
-                console.log("no rows " + rows.length);
-                var sql = "INSERT INTO users (username, password, name) VALUES ('"+req.query.user+"', '"+passhash+"', '"+req.query.name+"')";
+                // console.log("no rows " + rows.length);
+                var sql = "INSERT INTO users (username, password, name, email) VALUES ('"+req.query.user+"', '"+passhash+"', '"+req.query.name+"', '"+req.query.email+"')";
                 database.query(sql,function(err, results){
                     if(err) {
                         // database.end();
@@ -197,8 +200,7 @@ module.exports = function(app, todos, fs, database, crypto)
                     }
                     else
                     {
-                        // database.end();
-                        console.log("results " + results);
+                        // console.log("results " + results);
                         res.redirect('/login');
                     }
                 });
@@ -213,13 +215,15 @@ module.exports = function(app, todos, fs, database, crypto)
     });
 
     app.get('/logout-submit', function(req, res){
-        req.session.username = false;
-        res.redirect('/login');
+        req.session.email = false;
+        res.redirect('/get-all-todos');
     });
 
     //
     // ajax calls
     //
+
+    //grab all records that match the signed in user and redirect to home
     app.get('/get-todos', function(req, res){
         uid = req.session.userid;
         todos = [];
@@ -237,5 +241,27 @@ module.exports = function(app, todos, fs, database, crypto)
             }
         }); 
     });
-    
+
+    //a type of refresh, otherwise server must be restarted to see changes
+    //grab all records and redirect user to login if signed out or home screen if signed in
+    app.get('/get-all-todos', function(req, res){
+        todos = [];
+        database.query(`SELECT * FROM todos`, function(error, rows){
+            if(error){console.log('get-all-todos error: ', error);}
+            else{
+                // load todos from the database
+                rows.forEach(function(data){
+                    todos[data.id] = data;
+                })
+                if(req.session.email) {
+                    // redirect to login
+                    res.redirect('/');
+                }
+                else{
+                    // redirect to login
+                    res.redirect('/login');
+                } 
+            }
+        }); 
+    });
 }

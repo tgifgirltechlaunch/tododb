@@ -25,13 +25,13 @@ a.current{
 }
 .signinform{
     background-color: #f9d374;
-    width: 30vw;
+    width: 40vw;
     margin: 0 auto;
     padding: 40px;
 }
 .signupform{
     background-color: #f9d374;
-    width: 30vw;
+    width: 40vw;
     margin: 0 auto;
     padding: 40px;
 }
@@ -48,12 +48,11 @@ a.current{
 }
 #top{
     display: block;
-    height: 10vh;
     background-color: #138496;
 }
 #count{
     text-align: right;
-    padding: 20px 30px;
+    padding: 2px 30px;
 }
 .breadcrumbs{
     background-color: #138496;
@@ -61,7 +60,7 @@ a.current{
 a.back{
     text-decoration: none;
     color: #ffffff;
-    padding-left: 20px;
+    padding: 2px 20px;
 }
 
 a.back:hover{
@@ -69,7 +68,7 @@ a.back:hover{
     color: black;
 }
 
-/*   sidebar  */
+/***************************           Sidebar            *******************************/
 #wrapper {
     flex: 1 1 200px
 }
@@ -87,7 +86,7 @@ a.back:hover{
     display: none;
 }
 
-/* Main Content */
+/***************************           Main           *******************************/
 
 #middle{
     flex: 3 1 600px;
@@ -274,7 +273,7 @@ img {
     opacity: 1;
   }
 
-  /* delete page */
+  /***************************           Delete           *******************************/
   #delwrap{
       list-style: none;
   }
@@ -292,10 +291,10 @@ img {
     margin-left: -50px;
   }
   .delrow:nth-child(even) {
-    background-color: #eef1f1;
+    background-color: #eeeeee;
   }
   .delrow:nth-child(odd) {
-    background-color: #cccccc;
+    background-color: #bbbbbb;
   }
   .delcol{
     padding: 10px;
@@ -308,4 +307,25 @@ img {
       max-width: 25px;
       min-width: 25px;
   }
-    
+/***************************           Misc            *******************************/
+.alert{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.feedback{
+    font-size: 120%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.redirect{
+    font-size: 80%;
+    text-decoration: underline;
+}
+
+.submit{
+    margin-top: 15px; 
+    margin-bottom: 15px; 
+    font-family: 'FontAwesome';
+}
