@@ -40,13 +40,15 @@ database.query('SELECT * FROM todos', function(err, rows){
     rows.forEach(function(data){
         todos[data.id] = data;
     });
-
+    var sortvar = '';
+    
     // include routers
-    require('./router/main')(app, todos, fs, database, crypto);
+    require('./router/main')(app, todos, fs, database, crypto, sortvar);
 
     // hande 404 errors
     app.use(function(req, res){
-        res.status(404).render('404');
+        req.flash('404', 'Don\'t Panic. It\'s all part of the plan.');
+        res.status(404).render('404', {message: req.flash('404'), ptitle: "Page Not Found."});
     });
 
     // handle generic errors

@@ -1,13 +1,10 @@
 <% include ../includes/header.ejs %>
 <% include functions.ejs %>
-
 <div id="top">
     <div id="count">Total <%= count %></div>
 </div>
 
 <div class="content">
-    
-    
     <div id="wrapper">
         <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
             <i class="fas fa-align-left"></i>
@@ -22,16 +19,54 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a class="current" href="#">Home</a>
+                    <a <% if(sort === ''){ %> class="current" <% } else { %> class="" <% } %> href="/get-todos"><h6>Home</h6></a>
                 </li>
                 <li>
-                    <a href="/add">Add</a>
+                    <a href="/add"><h6>Add</h6></a>
                 </li>
                 <li>
-                    <a href="/del">Delete</a>
+                    <a href="/del"><h6>Delete</h6></a>
                 </li>
                 <li>
-                    <a href="/update">Edit</a>
+                    <a href="/update"><h6>Edit</h6></a>
+                </li>
+            </ul>
+            <h3>Filter</h3>
+            <ul class="list-unstyled components">
+                <li>
+                    <h6>Date</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === 'ASC'){ %> class="current" <% } else { %> class="" <% } %>" href="/date/old">Oldest</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'DESC'){ %> class="current" <% } else { %> class="" <% } %>" href="/date/new">Newest</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h6>Priority</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === 'low'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/low">Low</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'medium'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/medium">Medium</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'high'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/high">High</a>
+                        </li>
+                    </ul>
+                </li><li>
+                    <h6>Status</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === "1"){ %> class="current" <% } else { %> class="" <% } %> href="/status/completed">Completed</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === '0'){ %> class="current" <% } else { %> class="" <% } %> href="/status/incomplete">Pending</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -45,19 +80,19 @@
         </div>
         <section class="cards">
             <% todos.forEach(function(todo, i) { %>    
-                <article class="card">
+                <article class="card"><!-- card image -->
                 <picture class="thumbnail">
                         <img id="catimg<%= i %>" class="category__01"  alt="Category Image" src="<%= getCatImg(todo.category) %>" />
-                </picture>
+                </picture><!-- card content -->
                 <div class="card-content">
                     <p class="category category__01"><%= todo.category %></p>
                     <h2><%= todo.todo %></h2>
                     <p>
                        <%= todo.notes %>
                     </p>
-                </div><!-- .card-content -->
-                <footer>
-                    <div class="post-meta">
+                </div><!-- card footer -->
+                <footer class="<%= getPriColor(todo.priority) %>"> 
+                    <div class="cardfootwrap">
                         <span class="timestamp"><i class="fa fa-clock-o"></i> Created: <%= moment(todo.created).format('MM/DD/YYYY');%></span>
                         
                         <span class="round">
@@ -65,8 +100,6 @@
                             <input  onclick="chkit('<%= todo.id %>')" name="completed<%= todo.id %>" type="checkbox" id="completed<%= todo.id %>" value="<%= todo.completed %>" <% if(todo.completed === 1) { %> checked <% } else { %> <% } %>  />
                             
                             <label for="completed<%= todo.id %>"></label>
-
-                            <!-- <input onclick="chkit('<%= todo.id %>')" type="checkbox" name="completed<%= todo.id %>" id="completed<%= todo.id %>" value="<%= todo.completed %>" <% if(todo.completed === 1) { %> checked <% } else { %> <% } %>  /> -->
                         </span>
                     </div>
                     

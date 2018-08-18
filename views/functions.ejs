@@ -1,19 +1,53 @@
 <% getCatImg = function(currcat) {
     var imgpath = "" ;
     if (currcat === "misc") {
-        imgpath ='misc.svg';
+        imgpath ='/misc.svg';
     } 
     if (currcat === "hobby") {
-        imgpath ='hobby.svg';
+        imgpath ='/hobby.svg';
     } 
     if (currcat === "work") {
-        imgpath ='work.svg';
+        imgpath ='/work.svg';
     } 
     if (currcat === "leisure") {
-        imgpath ='leisure.svg';
+        imgpath ='/leisure.svg';
     } 
     if (currcat === "home") {
-        imgpath ='home.svg';
+        imgpath ='/home.svg';
     } 
     return imgpath;
+} %>
+
+<% getCatColor = function(currcat) {
+    var catcolorclass = "" ;
+    if (currcat === "misc") {
+        catcolorclass ='category__01';
+    } 
+    if (currcat === "hobby") {
+        catcolorclass ='category__02';
+    } 
+    if (currcat === "work") {
+        catcolorclass ='category__03';
+    } 
+    if (currcat === "leisure") {
+        catcolorclass ='category__04';
+    } 
+    if (currcat === "home") {
+        catcolorclass ='category__05';
+    } 
+    return catcolorclass;
+} %>
+
+<% getPriColor = function(currpri) {
+    var colorclass = "" ;
+    if (currpri === "low") {
+        colorclass ='priority__low';
+    } 
+    if (currpri === "medium") {
+        colorclass ='priority__med';
+    } 
+    if (currpri === "high") {
+        colorclass ='priority__high';
+    }  
+    return colorclass;
 } %>

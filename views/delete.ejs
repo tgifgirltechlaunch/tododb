@@ -16,10 +16,10 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/get-todos">Home</a>
                 </li>
                 <li>
-                    <a href="#">Add</a>
+                    <a href="/add">Add</a>
                 </li>
                 <li>
                     <a class="current" href="/del">Delete</a>
@@ -28,10 +28,46 @@
                     <a href="/update">Edit</a>
                 </li>
             </ul>
+            <h3>Filter</h3>
+            <ul class="list-unstyled components">
+                <li>
+                    <h6>Date</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === 'ASC'){ %> class="current" <% } else { %> class="" <% } %>" href="/date/old">Oldest</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'DESC'){ %> class="current" <% } else { %> class="" <% } %>" href="/date/new">Newest</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h6>Priority</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === 'low'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/low">Low</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'medium'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/medium">Medium</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === 'high'){ %> class="current" <% } else { %> class="" <% } %>" href="/priority/high">High</a>
+                        </li>
+                    </ul>
+                </li><li>
+                    <h6>Status</h6>
+                    <ul class="submenu">
+                        <li>
+                            <a <% if(sort === "1"){ %> class="current" <% } else { %> class="" <% } %> href="/status/completed">Completed</a>
+                        </li>
+                        <li>
+                            <a <% if(sort === '0'){ %> class="current" <% } else { %> class="" <% } %> href="/status/incomplete">Pending</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-
     </div>
-
     
     <div id="middle">
         <h1>Delete Todo</h1>

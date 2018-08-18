@@ -9,7 +9,9 @@ body{
 h1{
     font-size: 120%;
 }
-
+h2{
+    margin: 5px;
+}
 a{
     text-decoration: none;
     color: black;
@@ -70,20 +72,35 @@ a.back:hover{
 
 /***************************           Sidebar            *******************************/
 #wrapper {
-    flex: 1 1 200px
+    flex: 1 1 200px;
+    margin: 15px 0;
 }
 #sidebarbtn{
-    max-width: 12vw;
-    min-width: 12vw;
+    max-width: 60%;
+    min-width: 60%;
     padding: 10px;
     text-align: left;
 }
 #sidebar{
     background-color: #f9d374;
-    max-width: 12vw;
-    min-width: 12vw;
+    max-width: 60%;
+    min-width: 60%;
     padding: 10px;
     display: none;
+}
+
+.submenu{
+    padding-left: 0;
+    padding-bottom: 10px;
+    list-style: none;
+}
+
+.submenu li{
+    padding-left: 10px;
+}
+
+.submenu li a{
+    font-size: 90%;
 }
 
 /***************************           Main           *******************************/
@@ -144,7 +161,7 @@ img {
   
   .thumbnail img {
     fill: #c7c4c4;
-    height: 135px;
+    height: 165px;
     opacity: .25;
     padding: 1.5rem;
   }
@@ -174,13 +191,8 @@ img {
     flex: 1;
   }
   
-  .category {
-    font-size: .75rem;
-    text-transform: uppercase;
-  }
   
   footer {
-    border-top: 2px solid #e7e7e7;
     margin: .5rem 0 0;
     min-height: 30px;
     font-size: .5rem;
@@ -193,7 +205,8 @@ img {
       color: #fff;
       background: #e74c3c;
       padding: 10px 15px;
-      font-size: 14px;
+      font-size: 130%;
+      text-transform: uppercase;
       font-weight: 600;
       text-transform: uppercase;
   }
@@ -217,8 +230,20 @@ img {
   .category__05 {
     background-color: #8350a0;
   }
+
+  .priority__low {
+    border-top: 4px solid #f5eb5d;
+  }
   
-  .post-meta {
+  .priority__med {
+    border-top: 4px solid #ff9900;
+  }
+  
+  .priority__high {
+    border-top: 4px solid #fa1c03;
+  }
+  
+  .cardfootwrap {
     margin-top: .5rem;
     display: flex;
     flex-direction: row;
@@ -328,4 +353,8 @@ img {
     margin-top: 15px; 
     margin-bottom: 15px; 
     font-family: 'FontAwesome';
+}
+
+.notfound img{
+    max-width: 95%;
 }
