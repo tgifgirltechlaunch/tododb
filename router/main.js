@@ -35,6 +35,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
     app.get('/add', function(req, res){
         if(req.session.email) {
             uid = req.session.userid;
+            sortvar = "";
             database.query("SELECT * FROM todos WHERE userid = '"+uid+"'", function(error, rows){
                 if(error){console.log('get-todos error: ', error);}
                 else{
@@ -44,7 +45,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
                     })
                 }
             });
-            res.render('add', {ptitle:"Add todo", username: req.session.username, email: req.session.email, userid: req.session.userid});
+            res.render('add', {ptitle:"Add todo", sort: sortvar, username: req.session.username, email: req.session.email, userid: req.session.userid});
         }
         else res.redirect('/login');
     });
@@ -83,6 +84,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
     app.get('/update', function(req, res){
         if(req.session.email) {
             uid = req.session.userid;
+            sortvar = "";
             todos = [];
             // console.log("get todos userid " + uid);
             database.query(`SELECT * FROM todos WHERE userid = ${uid}`, function(error, rows){
@@ -92,7 +94,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
                     rows.forEach(function(data){
                         todos[data.id] = data;
                     })
-                    res.render('update', {moment: moment, ptitle:"Update Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
+                    res.render('update', {moment: moment, sort: sortvar, ptitle:"Update Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
                 }
             });
         }
@@ -149,6 +151,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
     app.get('/del', function(req, res){
         if(req.session.email) {
             uid = req.session.userid;
+            sortvar = "";
             todos = [];
             // console.log("get todos userid " + uid);
             database.query(`SELECT * FROM todos WHERE userid = ${uid}`, function(error, rows){
@@ -159,7 +162,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
                         todos[data.id] = data;
                     })
 
-                    res.render('delete', {moment: moment, ptitle:"Delete Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
+                    res.render('delete', {moment: moment, sort: sortvar, ptitle:"Delete Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
                 }
             });
         }
@@ -384,6 +387,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
     //grab all records and redirect user to login if signed out or home screen if signed in
     app.get('/get-all-todos', function(req, res){
         if(req.session.email) {
+            sortvar="";
             todos = [];
             database.query(`SELECT * FROM todos`, function(error, rows){
                 if(error){console.log('get-all-todos error: ', error);}
