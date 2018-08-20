@@ -6,6 +6,7 @@ body{
     font-size: 16px;
     color: #000;
 }
+
 h1{
     font-size: 120%;
 }
@@ -25,11 +26,25 @@ a:hover{
 a.current{
     color: #17a2b8;
 }
+.form-control{
+    width: 50%;
+    margin: 0;
+    height: calc(2.25rem + 10px);
+}
+.form-signin .form-control{
+    width: 50%;
+    margin: 0 auto;
+    height: calc(2.25rem + 10px);
+}
+.form-signin-heading{
+    margin: 5px;
+    text-align: center;
+}
 .signinform{
     background-color: #f9d374;
-    width: 40vw;
     margin: 0 auto;
     padding: 40px;
+    max-width: 60%;
 }
 .signupform{
     background-color: #f9d374;
@@ -75,6 +90,7 @@ a.back:hover{
     flex: 1 1 200px;
     margin: 15px 0;
 }
+#sidebtnwrap{}
 #sidebarbtn{
     max-width: 60%;
     min-width: 60%;
@@ -301,28 +317,35 @@ img {
   /***************************           Delete           *******************************/
   #delwrap{
       list-style: none;
+      margin-top: 15px;
   }
   ul#dellist {
     width: 100%;
 	list-style: none;
     padding: 5px;
-    display: table;
-    table-layout: fixed; /* the magic dust that ensures equal width */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
   }
   ul#dellist li {
-    display: inline;
-    display: table-cell;
     text-align: center;
-    margin-left: -50px;
+    margin: 0 auto;
+    flex-basis: 20%;
   }
   .delrow:nth-child(even) {
-    background-color: #eeeeee;
+    background-color: #f9d374;;
   }
   .delrow:nth-child(odd) {
-    background-color: #bbbbbb;
+    background-color: #f5dd9ff1;;
   }
   .delcol{
     padding: 10px;
+  }
+  .delhead{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
   }
   .listcount{
       border: 1px solid #138496;
@@ -331,6 +354,7 @@ img {
       padding: 5px;
       max-width: 25px;
       min-width: 25px;
+      max-height: 35px;
   }
 /***************************           Misc            *******************************/
 .alert{
@@ -339,9 +363,32 @@ img {
 }
 
 .feedback{
-    font-size: 120%;
+    margin: 50px auto;
+}
+
+.feedback h1{
+	border-bottom: 3px solid #ffffff;
+	color: #000;
+	font-family: 'Six Caps';
+	font-size: 140px;
+	font-weight: 400;
+	line-height: 180px;
+	letter-spacing: 20px;
+	margin-bottom: 60px;
+    text-transform: uppercase;
     text-align: center;
-    margin: 0 auto;
+}
+
+.flash{
+    color: #000;
+	font-family: 'Cormorant Garamond';
+	font-size: 28px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 48px;
+	max-width: 640px;
+	margin: 0 auto 48px;
+	text-align: center;
 }
 
 .redirect{
@@ -357,4 +404,108 @@ img {
 
 .notfound img{
     max-width: 95%;
+}
+
+#selectfrm{
+    margin: 15px 0;
+}
+
+.testbtn{
+    width: 100%;
+}
+
+.testbtn input[type='submit']{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.loginbtnwrap{
+    width: 50%;
+    margin: 0 auto;
+}
+
+/***************************           Media Queries            *******************************/
+
+@media (max-width: 320px){
+    h2 {
+        font-size: 1rem;
+    }
+    .signinform{
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .form-signin .form-control{
+        width: 100%;
+    }
+    .loginbtnwrap {
+        width: 100%;
+    }
+}
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px) {
+    .signinform{
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .form-signin .form-control{
+        width: 90%;
+    }
+}
+/* Portrait and Landscape */
+@media screen 
+  and (min-device-width: 480px) 
+  and (max-device-width: 768px) {
+    .signinform{
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .form-signin .form-control{
+        width: 90%;
+    }
+}
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 900px) {
+    .signinform{
+        max-width: 80%;
+    }
+
+    .form-signin .form-control{
+        width: 70%;
+    }
+}
+
+@media only screen 
+  and (min-device-width: 900px) 
+  and (max-device-width: 1024px) {
+    .signinform{
+        max-width: 80%;
+    }
+
+    .form-signin .form-control{
+        width: 50%;
+    }
+}
+
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1280px) {
+    .signinform{
+        max-width: 70%;
+    }
+
+    .form-signin .form-control{
+        width: 50%;
+    }
+}
+
+@media (max-width: 1900px){
+    .container {
+        margin: 0 auto;
+    }
 }

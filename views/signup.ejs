@@ -5,9 +5,9 @@
         <div class="alert alert-danger"><p>Please try log in or try again.</p></div>
     <% } %>
 
-    <div class="form-signup signupform">
+    <div class="form-signup signinform">
+        <h2 class="form-signin-heading">Please Sign Up</h2>
         <form class="form-signup" action="signup-submit" method="get">
-            <h2 class="form-signup-heading">Please Sign Up</h2>
             <label for="username" class="sr-only">Username</label>
             <input name="user" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
             <label for="email" class="sr-only">Email</label>
@@ -21,11 +21,11 @@
 
             <label for="name" class="sr-only">Name</label>
             <input name="name" type="text" id="inputName" class="form-control" placeholder="Name" required>
-            <input id="submitbtn" class="btn btn-lg btn-primary submit" type="submit" value="Sign Up  &#xf1d8;"/>
+            <div class="loginbtnwrap"> 
+                <input id="submitbtn" class="btn btn-lg btn-primary submit" type="submit" value="Sign Up  &#xf1d8;"/>
+                <p><a class="redirect" href="/login">Already have an account?</a></p>
+            </div>
         </form>
-
-        <p><a class="redirect" href="/login">Already have an account?</a></p>
-
     </div>
 </div> <!-- /container -->
 

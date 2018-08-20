@@ -3,10 +3,12 @@
 <div class="content">
     
     <div id="wrapper">
-        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+        <div id="sidebtnwrap">
+            <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
             <i class="fas fa-align-left"></i>
             <span>Menu</span>
-        </button>
+            </button>
+        </div>
         <!-- Sidebar -->
         <div id="sidebar">
 
@@ -70,19 +72,22 @@
     </div>
     
     <div id="middle">
-        <h1>Delete Todo</h1>
+        <h1>Delete</h1>
         <div id="delwrap">
         <% if (typeof todos !== 'undefined' && todos.length > 0) {%>
             <% todos.forEach(function(todo, i) { %> 
                 <div class="delrow">
-                    <div class="listcount"><%= i %></div>
+                    <div class="delhead">
+                        <div class="listcount"><%= ++i %></div>
+                        <div class="listbtn"><a href="/del-submit/<%= todo.id %>" class="btn btn-primary">X</a></div>
+                    </div>
+                    
                     <ul id="dellist">
-                        <li class="delcol"><%= todo.todo %> </li>
-                        <li class="delcol"><%= todo.category %></li>
-                        <li class="delcol"><%= todo.priority %></li>
-                        <li class="delcol"><%= todo.notes %></li>
-                        <li class="delcol"><%= moment(todo.created).format('MM/DD/YYYY');%></li>
-                        <li class="delcol"><a href="/del-submit/<%= todo.id %>" class="btn btn-primary">Delete</a> </li>
+                        <li class="delcol litodo"><%= todo.todo %> </li>
+                        <li class="delcol licat"><%= todo.category %></li>
+                        <li class="delcol lipri"><%= todo.priority %></li>
+                        <li class="delcol linotes"><%= todo.notes %></li>
+                        <li class="delcol licreated"><%= moment(todo.created).format('MM/DD/YYYY');%></li>
                     </ul>
                 </div>
         <% })} %>

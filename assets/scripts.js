@@ -7,6 +7,35 @@ function sidebarToggle() {
     }
 }
 
+function changeEdit() 
+{ 
+    let index = document.selectfrm.selectpicker.options[document.selectfrm.selectpicker.selectedIndex].value; 
+    // console.log("selection: " + index);
+    var inid = index;
+    
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify({'inid': inid}),
+        url: "/getfrmfields",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){ 
+            // console.log("frm data " + JSON.stringify(data));
+            var inid = document.getElementById('todoid');
+            var intodo = document.getElementById('todo');
+            var innotes = document.getElementById('notes');
+            var inpriority = document.getElementById(data[0].priority);
+            var incat = document.getElementById(data[0].category);
+            inid.value = data[0].id;
+            intodo.value = data[0].todo;
+            innotes.value = data[0].notes;
+            inpriority.checked = true;
+            incat.checked = true;
+        }
+    });
+}
+
+
 function checkPass()
 {
     var pass1 = document.getElementById('inputPassword');
@@ -53,19 +82,11 @@ function checkPass()
 
 function chkit(tid) {
     
-    // var status = encodeURI(document.getElementById('completed'+tid).checked); 
-    // console.log("...... " + tid + " " + status);
     var elementname = 'completed' + tid;
-    // console.log("element name " + elementname);
-    
-    // var checkval = status;
 
     var checkval = $("#"+elementname).is(':checked') ? 1 : 0;
     console.log("checkbox status " + checkval);
 
-    // var changes = {'completed':checkval, 'id':tid};
-    // console.log("changes " + changes.completed + " " + changes.id);
-    // console.log("stringify " + JSON.stringify(changes));
     $.ajax({
         type: "POST",
         dataType: "json",

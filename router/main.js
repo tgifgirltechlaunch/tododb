@@ -1,4 +1,5 @@
 const moment = require('moment');
+let tmp = 0;
 
 module.exports = function(app, todos, fs, database, crypto, sortvar)
 {
@@ -16,11 +17,15 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
             // get the count of non-empty elements  
             var count = todos.filter(function(value) {return value !== undefined}).length;
             
+            if(count === 0 && tmp === 0){
+                req.flash('empty', 'There are no existing entries. Please add your first to do.');
+            }
             if(count === 0){
-                req.flash('empty', 'Please add your first to do.');
+                req.flash('empty', 'There are no entries matching your criteria. Please make a different selection.');
             }
             else{
                 req.flash('empty', '');
+                tmp = count;
             }
             
             // render the page
@@ -52,15 +57,15 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
 
     app.get('/add-submit', function(req, res){
         if(req.session.email) {
-            let todotext = req.query.todo;
-            let priority = req.query.priority;
-            let category = req.query.category;
-            let notes = req.query.notes;
+            let todotext = req.query.todo.toLowerCase();
+            let priority = req.query.priority.toLowerCase();
+            let category = req.query.category.toLowerCase();
+            let notes = req.query.notes.toLowerCase();
             let userid = req.query.userid;
 
             // save todo to the database
             database.query(
-            `INSERT INTO todos (todo, priority, category, notes, userid) VALUES ('${todotext}', '${priority}', '${category}', '${notes}', '${userid}')`,
+            "INSERT INTO todos (`todo`, `priority`, `category`, `notes`, `userid`) VALUES (?, ?, ?, ?, ?)", [ todotext, priority, category, notes, userid ],
             function (error, results, fields){
                 if(error) throw console.log('add-submit error: ', error);
                 
@@ -102,15 +107,20 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
         
     });
 
-    app.get('/update-submit', function(req, res){
+    app.post('/update-submit', function(req, res){
         if(req.session.email) {
             // update todo fields
-            // console.log("priority field " + req.query.priority)
-            let todoid = req.query.todoid;
-            let priority = req.query.priority;
-            let cat = req.query.category;
-            let notes = req.query.notes;
-            let todo = req.query.todo;
+            console.log("priority: " + req.body.priority)
+            console.log("todo: " + req.body.todo)
+            console.log("notes: " + req.body.notes)
+            console.log("category: " + req.body.category)
+            console.log("id: " + req.body.todoid)
+            console.log("userid: " + req.body.userid)
+            let todoid = req.body.todoid;
+            let priority = req.body.priority;
+            let cat = req.body.category;
+            let notes = req.body.notes;
+            let todo = req.body.todo;
 
             var sql = "UPDATE todos SET category ='"+cat+"', priority ='"+priority+"', notes ='"+notes+"', todo ='"+todo+"' WHERE id='"+todoid+"'";
             
@@ -127,6 +137,25 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
         }
         else res.redirect('/login');
     });
+    
+    app.post('/getfrmfields', function(req, res){
+        if(req.session.email) {
+            let boxselect = req.body.inid;
+        
+            // console.log(">>> id " + id + " completed " + completed);
+            database.query(`SELECT * FROM todos WHERE userid = ${uid} AND id = ${boxselect}`, function(error, rows){
+                if(error){ console.log("Getfrmfields error: " + error);}
+                else{
+                    // console.log("Getfrmfields: " + JSON.stringify(rows));
+                    res.send(JSON.stringify(rows));
+                }
+            });
+        }
+        else res.redirect('/login');
+    });
+
+
+
     //
     // completed checkbox
     //
@@ -159,7 +188,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
                 else{
                     // load todos from the database
                     rows.forEach(function(data){
-                        todos[data.id] = data;
+                        todos.push(data);
                     })
 
                     res.render('delete', {moment: moment, sort: sortvar, ptitle:"Delete Todos", todos: todos, username: req.session.username, email: req.session.email, userid: req.session.userid});
@@ -269,6 +298,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
         if(req.session.email) {
             uid = req.session.userid;
             let priority = req.params.pri
+            
             //set sort so when a sort selection is made, css shows the selection as curent
             sortvar = priority;
             todos = [];

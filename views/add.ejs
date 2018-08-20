@@ -4,10 +4,12 @@
     
     
     <div id="wrapper">
-        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+        <div id="sidebtnwrap">
+            <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
             <i class="fas fa-align-left"></i>
             <span>Menu</span>
-        </button>
+            </button>
+        </div>
         <!-- Sidebar -->
         <div id="sidebar">
 
@@ -71,7 +73,7 @@
     </div>
     
     <div id="middle">
-        <h1>Add a todo</h1>
+        <h1>Add</h1>
         <form action="add-submit" class="form-add" method="get">
 
             <div class="form-group">

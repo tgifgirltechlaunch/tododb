@@ -2,10 +2,12 @@
 <div class="breadcrumbs"><a class="back" href="/"><i class="fas fa-caret-square-left"></i> Back</a></div>
 <div class="content">
     <div id="wrapper">
-        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+        <div id="sidebtnwrap">
+            <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
             <i class="fas fa-align-left"></i>
             <span>Menu</span>
-        </button>
+            </button>
+        </div>
         <!-- Sidebar -->
         <div id="sidebar">
             <div class="sidebar-header">
@@ -68,83 +70,92 @@
 
     
     <div id="middle">
-        <h1>Edit todo</h1>
-        <% if (typeof todos !== 'undefined' && todos.length > 0) {%>
-            <% todos.forEach(function(todo, i) { %> 
-
-        <form action="update-submit" method="get">
-
-            <div class="form-group">
-                <input type="hidden" name="userid" value="<%= userid %>">
-                <input type="hidden" name="todoid" value="<%= todo.id %>">
-                <label for="todo">To Do</label>
-                <textarea cols="50" rows="2" name="todo" id="todo" class="form-control" required autofocus><%= todo.todo %></textarea>        
-            </div>
-
-            <div class="form-group">
-                <label for="notes">Notes</label>
-                <textarea cols="50" rows="4" name="notes" id="notes" class="form-control" required><%= todo.notes %></textarea>        
-            </div>
-            
-            <div class="form-group">
-                <label for="priority">Priority</label>
-                <div class="form-check">
-                    <input class="form-check-input"  name="priority" type="radio" id="priority1" value="low" <% if(todo.priority === "low") { %> checked <% } else { %> <% } %>  />
-                    <label class="form-check-label" for="priority1">
-                        Low
-                    </label>
+        <h1>Edit</h1>
+        <% if (typeof todos !== 'undefined' && todos.length > 0) { let test = ""; %>
+            <form id="selectfrm" name="selectfrm" action="update-submit" method="get">
+                <select class="selectpicker" data-style="btn-info" id="selectpicker" name="selectpicker" onchange="changeEdit()">
+                    <optgroup label="Select To Do">
+                        <option value="">Select To Do</option>
+                        <% todos.forEach(function(todo, i) { %>
+                        <option value="<%= todo.id %>"><%= todo.todo %></option>
+                        <% }) %>
+                    </optgroup>
+                </select>
+                
+            </form>
+            <div id="editfrm"></div>
+            <form action="update-submit" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="userid" id="userid" value="<%= userid %>">
+                    <input type="hidden" name="todoid" id="todoid" value="<%= todos.id %>">
+                    <label for="todo">To Do</label>
+                    <textarea cols="50" rows="2" name="todo" id="todo" class="form-control" required autofocus><%= todos.todo %></textarea>        
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input"  name="priority" type="radio" id="priority2" value="medium" <% if(todo.priority === "medium") { %> checked <% } else { %> <% } %>  />
-                    <label class="form-check-label" for="priority2">
-                        Medium
-                    </label>
+    
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea cols="50" rows="4" name="notes" id="notes" class="form-control" required><%= todos.notes %></textarea>        
                 </div>
-                <div class="form-check disabled">
-                    <input class="form-check-input"  name="priority" type="radio" id="priority3" value="high" <% if(todo.priority === "high") { %> checked <% } else { %> <% } %>  />
-                    <label class="form-check-label" for="priority3">
-                        High
-                    </label>
+                
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <div class="form-check">
+                        <input class="form-check-input"  name="priority" type="radio" id="low" value="low" <% if(todos.priority === "low") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="priority1">
+                            Low
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"  name="priority" type="radio" id="medium" value="medium" <% if(todos.priority === "medium") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="priority2">
+                            Medium
+                        </label>
+                    </div>
+                    <div class="form-check disabled">
+                        <input class="form-check-input"  name="priority" type="radio" id="high" value="high" <% if(todos.priority === "high") { %> checked <% } else { %> <% } %>  />
+                        <label class="form-check-label" for="priority3">
+                            High
+                        </label>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="category">Category</label>
-                <div class="form-check">
-                        <input class="form-check-input" name="category" type="radio" id="category1" value="work" <% if(todo.category === "work") { %> checked <% } else { %> <% } %>  />
-                        <label class="form-check-label" for="category1">
-                            Work
-                        </label>
-                        </div>
-                        <div class="form-check">
-                        <input class="form-check-input" name="category" type="radio" id="category2" value="home" <% if(todo.category === "home") { %> checked <% } else { %> <% } %>  />
-                        <label class="form-check-label" for="category2">
-                            Home
-                        </label>
-                        </div>
-                        <div class="form-check disabled">
-                        <input class="form-check-input" name="category" type="radio" id="category3" value="hobby" <% if(todo.category === "hobby") { %> checked <% } else { %> <% } %>  />
-                        <label class="form-check-label" for="category3">
-                            Hobby
-                        </label>
-                        </div>
-                        <div class="form-check disabled">
-                        <input class="form-check-input" name="category" type="radio" id="category4" value="leisure" <% if(todo.category === "leisure") { %> checked <% } else { %> <% } %>  />
-                        <label class="form-check-label" for="category4">
-                            Leisure
-                        </label>
-                        </div>
-                        <div class="form-check disabled">
-                        <input class="form-check-input" name="category" type="radio" id="category5" value="misc" <% if(todo.category === "misc") { %> checked <% } else { %> <% } %>  />
-                        <label class="form-check-label" for="category5">
-                            Misc
-                        </label>
-                        </div>
-            </div>
-            
-            <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Change  &#xf1d8;"/>
-        </form>
-        <% })} %>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="form-check">
+                            <input class="form-check-input" name="category" type="radio" id="work" value="work" <% if(todos.category === "work") { %> checked <% } else { %> <% } %>  />
+                            <label class="form-check-label" for="category1">
+                                Work
+                            </label>
+                            </div>
+                            <div class="form-check">
+                            <input class="form-check-input" name="category" type="radio" id="home" value="home" <% if(todos.category === "home") { %> checked <% } else { %> <% } %>  />
+                            <label class="form-check-label" for="category2">
+                                Home
+                            </label>
+                            </div>
+                            <div class="form-check disabled">
+                            <input class="form-check-input" name="category" type="radio" id="hobby" value="hobby" <% if(todos.category === "hobby") { %> checked <% } else { %> <% } %>  />
+                            <label class="form-check-label" for="category3">
+                                Hobby
+                            </label>
+                            </div>
+                            <div class="form-check disabled">
+                            <input class="form-check-input" name="category" type="radio" id="leisure" value="leisure" <% if(todos.category === "leisure") { %> checked <% } else { %> <% } %>  />
+                            <label class="form-check-label" for="category4">
+                                Leisure
+                            </label>
+                            </div>
+                            <div class="form-check disabled">
+                            <input class="form-check-input" name="category" type="radio" id="misc" value="misc" <% if(todos.category === "misc") { %> checked <% } else { %> <% } %>  />
+                            <label class="form-check-label" for="category5">
+                                Misc
+                            </label>
+                            </div>
+                </div>
+                
+                <input class="btn btn-lg btn-primary" style="font-family: FontAwesome"  type="submit" value="Change  &#xf1d8;"/>
+            </form>
+        <% } %>
     </div>
 </div>
 <% include ../includes/footer.ejs %>

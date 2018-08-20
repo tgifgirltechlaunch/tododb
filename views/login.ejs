@@ -5,18 +5,18 @@
         <div class="alert alert-danger">We couldn't find a matching record. Please try again.</div>
     <% } %>
 
-    <div class="form-signin signinform">
+    
+    <div class="form-signin-wrap signinform">
+        <h2 class="form-signin-heading">Please Log In</h2>
         <form class="form-signin" action="login-submit" method="get">
-        <h2 class="form-signin-heading">Please Log in</h2>
-        <label for="email" class="sr-only">Email</label>
-        <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input class="btn btn-lg btn-primary submit" type="submit" value="Login  &#xf1d8;"/>
+            <label for="email" class="sr-only">Email</label>
+            <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <div class="loginbtnwrap"><input class="btn btn-lg btn-primary submit" type="submit" value="Login  &#xf1d8;"/>
+                <p class="loginlink"><a class="redirect" href="/signup">Sign-Up</a></p>
+            </div>
         </form>
-
-        <p><a class="redirect" href="/signup">Sign-Up</a></p>
-
     </div>
 </div> <!-- /container -->
 

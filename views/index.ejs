@@ -6,10 +6,13 @@
 
 <div class="content">
     <div id="wrapper">
-        <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
+        <div id="sidebtnwrap">
+            <button onclick="sidebarToggle()" type="button" id="sidebarbtn" class="btn btn-info">
             <i class="fas fa-align-left"></i>
             <span>Menu</span>
-        </button>
+            </button>
+        </div>
+        
         <!-- Sidebar -->
         <div id="sidebar">
 
@@ -75,6 +78,7 @@
     <div id="middle">
         <div class="feedback">
             <% if (message.length) { %>
+            <h1>Excuse Me</h1>
             <div class="flash"><%= message %></div>
             <% } %>
         </div>
