@@ -20,9 +20,7 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
             if(count === 0 && tmp === 0){
                 req.flash('empty', 'There are no existing entries. Please add your first to do.');
             }
-            if(count === 0){
-                req.flash('empty', 'There are no entries matching your criteria. Please make a different selection.');
-            }
+            
             else{
                 req.flash('empty', '');
                 tmp = count;
@@ -385,8 +383,6 @@ module.exports = function(app, todos, fs, database, crypto, sortvar)
     //
     // Get Todos
     //
-
-
     //grab all records that match the signed in user and redirect to home
     app.get('/get-todos', function(req, res){
         if(req.session.email) {
